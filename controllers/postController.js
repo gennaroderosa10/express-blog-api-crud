@@ -24,7 +24,36 @@ function show(req, res) {
 }
 
 function store(req, res) {
-    res.send("creo nuovo post")
+
+
+    const dati = req.body;
+
+    if (dati.title === undefined || dati.title.length === 0) {
+        res.status(400);
+        return res.json({
+            error: "Client error",
+            message: "il title è obbligatorio"
+        });
+    }
+
+    const newId = postsArray[postsArray.length - 1].id + 1;
+
+    const newPost = {
+        id: newId,
+        title: dati.title,
+        content: dati.content,
+        tags: dati.tags,
+    };
+
+    postsArray.push(newPost)
+
+    res.status(201);
+
+    res.json(newPost);
+
+
+
+
 }
 
 function update(req, res) {

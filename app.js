@@ -7,6 +7,8 @@ const port = 3020;
 
 app.use(express.static("public"));
 
+app.use(express.json());
+
 
 app.get("/", (req, res) => {
     res.type("html").send("<h1>Ciao sono api delle ricette</h1>");
