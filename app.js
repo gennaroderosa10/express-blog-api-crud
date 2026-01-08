@@ -1,5 +1,6 @@
 import express from "express";
 import postsRouters from "./routers/posts.js"
+import pageNotFound from "./middlewares/pageNotFound.js";
 
 const app = express();
 const port = 3020;
@@ -17,7 +18,10 @@ app.get("/", (req, res) => {
 
 app.use("/posts", postsRouters)
 
+app.use(pageNotFound);
+
 app.listen(port, () => {
     console.log(`il sever è in ascolto sulla porta ${port}`);
 
 });
+

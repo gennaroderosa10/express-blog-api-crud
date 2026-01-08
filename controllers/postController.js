@@ -58,8 +58,38 @@ function store(req, res) {
 
 function update(req, res) {
     const id = parseInt(req.params.id);
-    res.send("aggiorna post n." + id)
+    const dati = req.body;
+
+    const postIndex = postsArray.findIndex((post) => post.id === id);
+
+    if (postIndex === -1) {
+        res.status(404);
+        return res.json({
+            message: "post non disponibile",
+        });
+    }
+
+    if (!dati.title || dati.title.length === 0) {
+        res.status(400);
+        return res.json({
+            error: "Client error",
+            message: "il title è obbligatorio",
+        });
+    }
+
+
+    const updatedPost = {
+        id: id,
+        title: dati.title,
+        content: dati.content,
+        tags: dati.tags,
+    };
+
+    postsArray[postIndex] = updatedPost;
+
+    res.json(updatedPost);
 }
+
 
 function modify(req, res) {
     const id = parseInt(req.params.id);
